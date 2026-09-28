@@ -1,5 +1,8 @@
 # E-commerce MVP
 
+
+[![Просмотры README](https://vbr.nathanchung.dev/badge?page_id=Richbanker.online-shop&text=README_Views)](https://github.com/Richbanker/online-shop)
+
 Современный MVP интернет-магазина, построенный с использованием React, TypeScript и Tailwind CSS.
 
 ## Возможности
