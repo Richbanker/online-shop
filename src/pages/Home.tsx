@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { demoProducts } from '../data/demoProducts'
 import ProductCard from '../components/ProductCard'
 import { Product, ProductFilters } from '../types/product'
 import { useCartStore } from '../store/cartStore'
@@ -13,70 +14,13 @@ const Home = () => {
   const lastItemAdded = useCartStore((state) => state.lastItemAdded)
 
   useEffect(() => {
-    fetchProducts()
+    setAllProducts(demoProducts)
+    setLoading(false)
   }, [])
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('https://fakestoreapi.com/products')
-      const data = await response.json()
-      setAllProducts(data)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching products:', error)
-      setLoading(false)
-    }
-  }
+  useEffect(() => { setCurrentPage(1) }, [filters])
 
-  const fakeToys: Product[] = [
-    {
-      id: 101,
-      title: "Конструктор Космический корабль",
-      price: 25.99,
-      description: "Отличный конструктор для юных инженеров!",
-      category: "toys",
-      image: "https://via.placeholder.com/150/FF0000/FFFFFF?text=Toy+1",
-      rating: { rate: 4.5, count: 120 }
-    },
-    {
-      id: 102,
-      title: "Набор машинок гоночных",
-      price: 15.50,
-      description: "Быстрые машинки для захватывающих гонок!",
-      category: "toys",
-      image: "https://via.placeholder.com/150/0000FF/FFFFFF?text=Toy+2",
-      rating: { rate: 4.2, count: 85 }
-    },
-    {
-      id: 103,
-      title: "Мягкая игрушка Медвежонок",
-      price: 12.00,
-      description: "Мягкий и пушистый друг для обнимашек.",
-      category: "toys",
-      image: "https://via.placeholder.com/150/008000/FFFFFF?text=Toy+3",
-      rating: { rate: 4.8, count: 200 }
-    },
-    {
-      id: 104,
-      title: "Кукла Волшебница",
-      price: 30.00,
-      description: "Кукла с магическими способностями.",
-      category: "toys",
-      image: "https://via.placeholder.com/150/FFFF00/000000?text=Toy+4",
-      rating: { rate: 4.6, count: 150 }
-    },
-    {
-      id: 105,
-      title: "Головоломка Лабиринт",
-      price: 8.75,
-      description: "Увлекательная головоломка для развития логики.",
-      category: "toys",
-      image: "https://via.placeholder.com/150/FFA500/FFFFFF?text=Toy+5",
-      rating: { rate: 4.3, count: 95 }
-    },
-  ]
-
-  const filteredProducts = (filters.category === 'toys' ? fakeToys : allProducts).filter((product) => {
+  const filteredProducts = allProducts.filter((product) => {
     if (filters.category && product.category !== filters.category) return false
     if (filters.minPrice && product.price < filters.minPrice) return false
     if (filters.maxPrice && product.price > filters.maxPrice) return false
@@ -115,6 +59,7 @@ const Home = () => {
     <div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Товары</h1>
+        <p className="mb-4 text-gray-600">Демонстрационный каталог. Товары и цены учебные; реальные покупки не выполняются.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <select
             className="p-2 border rounded-md"
@@ -193,4 +138,4 @@ const Home = () => {
   )
 }
 
-export default Home 
+export default Home

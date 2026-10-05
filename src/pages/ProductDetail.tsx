@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { demoProducts } from '../data/demoProducts'
 import { Product } from '../types/product'
 import { useCartStore, CartItem } from '../store/cartStore'
 import { motion } from 'framer-motion'
@@ -13,19 +14,9 @@ const ProductDetail = () => {
   const addItem = useCartStore((state) => state.addItem)
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`)
-        const data = await response.json()
-        setProduct(data)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching product:', error)
-        setLoading(false)
-      }
-    }
-
-    fetchProduct()
+    setProduct(demoProducts.find((item) => item.id === Number(id)) ?? null)
+    setLoading(false)
+    setAddedToCart(false)
   }, [id])
 
   const handleAddToCart = () => {
@@ -94,4 +85,4 @@ const ProductDetail = () => {
   )
 }
 
-export default ProductDetail 
+export default ProductDetail
