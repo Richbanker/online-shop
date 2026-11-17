@@ -58,11 +58,14 @@ export const useCartStore = create<CartStore>()(
           items: state.items.filter((item) => item.id !== id),
         })),
       updateQuantity: (id, quantity) =>
-        set((state) => ({
-          items: state.items.map((item) =>
-            item.id === id ? { ...item, quantity } : item
-          ),
-        })),
+        set((state) => {
+          if (!Number.isSafeInteger(quantity) || quantity < 1) return state
+          return {
+            items: state.items.map((item) =>
+              item.id === id ? { ...item, quantity } : item
+            ),
+          }
+        }),
       clearCart: () => set({ items: [] }),
       clearLastItemAdded: () => set({ lastItemAdded: null }),
     }),
