@@ -55,9 +55,11 @@ const Cart = () => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() =>
-                    updateQuantity(item.id, Math.max(0, item.quantity - 1))
+                    updateQuantity(item.id, Math.max(1, item.quantity - 1))
                   }
-                  className="px-2 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                  disabled={item.quantity <= 1}
+                  aria-label={`Уменьшить количество: ${item.title}`}
+                  className="px-2 py-1 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   -
                 </button>
