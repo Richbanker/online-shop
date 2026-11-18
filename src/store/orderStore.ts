@@ -26,9 +26,10 @@ export const useOrderStore = create<OrderStore>()(
     (set, get) => ({
       orders: [],
       addOrder: (orderData) => {
+        const id = get().orders.reduce((max, order) => Math.max(max, order.id + 1), Date.now())
         const newOrder: Order = {
           ...orderData,
-          id: Date.now(),
+          id,
           date: new Date().toISOString()
         }
         set((state) => ({
