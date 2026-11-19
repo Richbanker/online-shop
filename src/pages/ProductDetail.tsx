@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { demoProducts } from '../data/demoProducts'
 import { Product } from '../types/product'
@@ -12,11 +12,15 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true)
   const [addedToCart, setAddedToCart] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
+  const messageTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setProduct(demoProducts.find((item) => item.id === Number(id)) ?? null)
     setLoading(false)
     setAddedToCart(false)
+    return () => {
+      if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current)
+    }
   }, [id])
 
   const handleAddToCart = () => {
@@ -30,8 +34,10 @@ const ProductDetail = () => {
       }
       addItem(cartItem)
       setAddedToCart(true)
-      setTimeout(() => {
+      if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current)
+      messageTimeoutRef.current = setTimeout(() => {
         setAddedToCart(false)
+        messageTimeoutRef.current = null
       }, 3000)
     }
   }
