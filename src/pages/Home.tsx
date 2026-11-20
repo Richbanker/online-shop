@@ -29,14 +29,14 @@ const Home = () => {
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (filters.sortBy === 'price') {
-      return filters.sortOrder === 'asc'
-        ? a.price - b.price
-        : b.price - a.price
+      return filters.sortOrder === 'desc'
+        ? b.price - a.price
+        : a.price - b.price
     }
     if (filters.sortBy === 'rating') {
-      return filters.sortOrder === 'asc'
-        ? a.rating.rate - b.rating.rate
-        : b.rating.rate - a.rating.rate
+      return filters.sortOrder === 'desc'
+        ? b.rating.rate - a.rating.rate
+        : a.rating.rate - b.rating.rate
     }
     return 0
   })
