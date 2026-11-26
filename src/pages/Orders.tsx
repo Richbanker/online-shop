@@ -34,7 +34,7 @@ const Orders = () => {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg shadow-md p-6"
           >
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-start mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-800">
                   Заказ #{order.id}
@@ -56,7 +56,7 @@ const Orders = () => {
 
             <div className="mb-4">
               <h4 className="font-medium text-gray-700 mb-2">Информация о доставке:</h4>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-600 break-words">
                 <p>{order.customerInfo.name}</p>
                 <p>{order.customerInfo.email}</p>
                 <p>{order.customerInfo.address}</p>
@@ -70,15 +70,15 @@ const Orders = () => {
                 {order.items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between text-sm"
+                    className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-sm"
                   >
-                    <div className="flex items-center space-x-2">
+                    <div className="flex min-w-0 items-center space-x-2">
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-10 h-10 object-contain"
+                        className="w-10 h-10 shrink-0 object-contain"
                       />
-                      <span>{item.title}</span>
+                      <span className="min-w-0 break-words">{item.title}</span>
                     </div>
                     <div className="text-right">
                       <p>${item.price.toFixed(2)} x {item.quantity}</p>
